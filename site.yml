@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: update repository index
+      apt:
+        update_cache: yes
+      when: ansible_distribution_version == ["Ubuntu", "Debian"]
+
+    - name: install apache2
+      apt:
+        name:
+          - apache2
+          - libapache2-mod-php
+          - cockpit
+        state: latest
+      when: ansible_distribution_version == "Ubuntu"
